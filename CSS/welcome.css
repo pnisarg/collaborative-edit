@@ -1,0 +1,29 @@
+header,#main{
+	display: block;
+}
+header{
+	margin: 22px;
+	padding:10px; 
+	background-color: #994433; 
+	font: italic bold 40px Georgia, serif;
+	color: white;
+	
+
+}
+input{
+	font: italic 20px Georgia, serif;
+}
+#login{
+	border: 3px groove red;
+	float: right;
+	margin: 22px;
+	padding: 5px;
+}
+#btn-login{
+	margin: 10px 5px 10px 0px;
+	width: 90px;
+}
+#btn-signup{
+	margin: 10px 5px 10px 5px;
+	width: 90px;
+}

@@ -1,0 +1,36 @@
+header,#main{
+	display: block;
+}
+header{
+	margin: 22px;
+	padding:20px; 
+	background-color: #994433; 
+	color: white;
+}
+#header_title{
+	width:70%;
+	font: italic bold 40px Georgia, serif;
+}
+#leftSide{
+	
+	border: 3px solid gray;
+	min-height: 700px;
+}
+#rightSide{
+	border: 3px solid gray;
+	min-height: 700px;
+}
+#editor{
+	width: 70%;
+	min-height: 600px;
+}
+#selectLang{
+	margin-left: 10px;
+	padding: 10px; 
+}
+#header_hello{
+	
+	float:right;
+	font: italic bold 13px Georgia, serif;
+	padding-bottom: 5px;
+}
