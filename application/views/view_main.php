@@ -26,7 +26,7 @@
 	<script >
 		urlReceive = "<?=base_url()?>index.php/main/getData";
 		$(document).ready(function(){
-			$("#editor").everyTime(2000,function(){
+			$("#editor").everyTime(1000,function(){
 				$.getJSON(urlReceive,function(response){
 					if(response){
 						var curPosition = editor.getCursorPosition();
@@ -42,7 +42,10 @@
 <head>
 <body>
 	<header>
-		<div  id="header_title" > Collaborative Edit</div>
+		<div  id="header_title" >
+			Collaborative Edit 
+			<table class="span2" id="header_session_id" border="solid"> <tr><th> <?= $id ?> </th><tr></table> 
+		</div>
 		<div  id="header_hello"> Hello, <?=$_SESSION['user']->first?> 
 			<?= anchor('index.php/welcome/logout','(Logout)') ?> 
 		</div>

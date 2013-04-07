@@ -21,12 +21,16 @@ class Main extends CI_Controller {
 		$temp = $this->input->post('json');
 		$jsonobj = json_decode($temp);
 		$_SESSION['data'] = $jsonobj->dataX;
-		echo $_SESSION['data'];
+		$this->load->model('editor_model');
+		$this->editor_model->updateData($jsonobj->dataX, $_SESSION['id']);
 
 	}
 	function getData(){
 		
-		echo json_encode(array('data'=> $_SESSION['data']));
+		$this->load->model('editor_model');
+		$row = $this->editor_model->getData($_SESSION['id']);
+		$data = $row;
+		echo json_encode(array('data'=> $data));
 	}
 }
 

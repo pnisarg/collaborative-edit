@@ -12,6 +12,18 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view('view_welcome');
 	}
+	function choice(){
+		$this->load->view('view_choice');
+	}
+	function Join(){
+		$join = $this->input->post('sessionString');
+		$_SESSION['id'] = $join;
+		$data['id'] = $join;
+		$this->load->view('view_main',$data);
+
+	}
+
+
 	function createNew(){
 		//this function creates random string of length 5 which will be used as url.
 
@@ -23,12 +35,12 @@ class Welcome extends CI_Controller {
 		 	$randString .= $validCharacters[$index];
 		 	
 		 }
-		 //echo $randString;
-
-		 //some logic needed for : 
-		 	//append url and randString or create entry in database
-
-		 $this->load->view('view_main');
+		 $_SESSION['id'] = $randString;
+		 $data['id'] = $randString;
+		 $this->load->model('editor_model');
+		 $this->editor_model->initialise($randString);
+		 $this->load->view('view_main',$data);
+		
 	}
 	function login(){
 		$this->load->library('form_validation');
@@ -45,7 +57,8 @@ class Welcome extends CI_Controller {
     			$user = $this->user_model->get($login);
     			if (isset($user) && $user->comparePassword($clearPassword)) {
     				$_SESSION['user'] = $user;
-    				$this->load->view('view_main');
+    				//$this->load->view('view_main');
+    				$this->choice();
     			}
 	 			else {   			
 					$data['errorMsg']='Incorrect username or password!';
@@ -57,9 +70,6 @@ class Welcome extends CI_Controller {
 
 	}
 
-	function signUp(){
-			$this->load->view('view_signup');
-	}
 
 	function logout(){
 		session_destroy();
@@ -90,7 +100,8 @@ class Welcome extends CI_Controller {
     		$this->load->model('user_model');
     		$this->user_model->insert($user);
     		$_SESSION['user'] = $user;
-    		$this->load->view('view_main');
+    		//$this->load->view('view_main');
+    		$this->choice();
 		}
 	    	
 	}

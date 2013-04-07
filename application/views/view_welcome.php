@@ -15,7 +15,7 @@
 			}
 
 		?>
-			
+		
 		
 	</script>
 
@@ -46,13 +46,13 @@
 			</div>
 			
 
-			<div> 
+			<!-- <div> 
 				<?php 
 				echo form_open('index.php/welcome/createNew');
 				echo "<button class='btn btn-inverse span3'>Create New</button>";
 				echo form_close();
 				?>
-			</div>
+			</div>  -->
 		</div>
 		
 	</div> 

@@ -11,6 +11,13 @@ header{
 	width:70%;
 	font: italic bold 40px Georgia, serif;
 }
+#header_session_id{
+	float: right;
+	color: #fee288;
+	font: bold 18px Georgia, serif;
+}
+
+
 #leftSide{
 	
 	border: 3px solid gray;
