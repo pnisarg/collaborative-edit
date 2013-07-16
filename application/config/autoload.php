@@ -65,7 +65,7 @@ $autoload['libraries'] = array('database');
 */
 
 
-$autoload['helper'] = array('url','form','text','date','security');
+$autoload['helper'] = array('url','form','text','date','security','email');
 
 
 /*

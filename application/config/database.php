@@ -50,7 +50,7 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = 'nisarg';
+$db['default']['password'] = '';
 $db['default']['database'] = 'collaedit';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';

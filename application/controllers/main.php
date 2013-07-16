@@ -32,5 +32,26 @@ class Main extends CI_Controller {
 		$data = $row;
 		echo json_encode(array('data'=> $data));
 	}
+	function getCollaborators(){
+		$this->load->model('editor_model');
+		$data = $this->editor_model->getCollaborators($_SESSION['id']);
+		echo json_encode(array('data'=> $data));
+
+	}
+	function getMsg(){
+		$this->load->model('editor_model');
+		$result = $this->editor_model->getMsg($_SESSION['id']);
+		echo json_encode(array('data'=> $result));
+		
+	}
+	function postMsg(){
+		$this->load->model('editor_model');
+		$msg = $this->input->post('json');
+		$jsonobj = json_decode($msg);
+		$msg = $jsonobj->message;
+		$this->editor_model->postMsg($_SESSION['id'], $msg);
+		
+	}
+
 }
 

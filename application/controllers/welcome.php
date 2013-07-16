@@ -16,30 +16,47 @@ class Welcome extends CI_Controller {
 		$this->load->view('view_choice');
 	}
 	function Join(){
-		$join = $this->input->post('sessionString');
-		$_SESSION['id'] = $join;
-		$data['id'] = $join;
-		$this->load->view('view_main',$data);
+		if(!isset($_SESSION['id'])){
+			$join = $this->input->post('sessionString');
+			$_SESSION['id'] = $join;
+			$data['id'] = $join;
+			$this->load->model('editor_model');
+			$this->editor_model->addCollaborator($join,$_SESSION['user']->first);
+			$this->load->view('view_main',$data);
+		}
+		else{
+			$data['id'] = $_SESSION['id'];
+			$this->load->view('view_main',$data);
+
+		}
+		
 
 	}
 
 
 	function createNew(){
 		//this function creates random string of length 5 which will be used as url.
-
-		 $validCharacters = "abcdefghijklmnopqrstuxyvwzABCDEFGHIJKLMNOPQRSTUXYVWZ0";
-		 $validCharNumber = strlen($validCharacters)-1;
-		 $randString = "";
-		 for($i = 0; $i < 5 ; $i++){
-		 	$index = mt_rand(0,$validCharNumber);
-		 	$randString .= $validCharacters[$index];
-		 	
-		 }
-		 $_SESSION['id'] = $randString;
-		 $data['id'] = $randString;
-		 $this->load->model('editor_model');
-		 $this->editor_model->initialise($randString);
-		 $this->load->view('view_main',$data);
+		if(!isset($_SESSION['id'])){
+			 $validCharacters = "abcdefghijklmnopqrstuxyvwzABCDEFGHIJKLMNOPQRSTUXYVWZ0";
+			 $validCharNumber = strlen($validCharacters)-1;
+			 $randString = "";
+			 for($i = 0; $i < 5 ; $i++){
+			 	$index = mt_rand(0,$validCharNumber);
+			 	$randString .= $validCharacters[$index];
+			 	
+			 }
+			 $_SESSION['id'] = $randString;
+			 $data['id'] = $randString;
+			 $this->load->model('editor_model');
+			 $this->editor_model->initialise($randString);
+			 $this->editor_model->addCollaborator($randString,$_SESSION['user']->first);
+			 $this->editor_model->initChat($randString);
+			 $this->load->view('view_main',$data);
+		}else{
+			$data['id'] = $_SESSION['id'];
+			$this->load->view('view_main',$data);
+		}
+		
 		
 	}
 	function login(){
@@ -52,9 +69,9 @@ class Welcome extends CI_Controller {
 		}
 		else{
 			$login = $this->input->post('username');
-    			$clearPassword = $this->input->post('password');
-    			$this->load->model('user_model');
-    			$user = $this->user_model->get($login);
+    		$clearPassword = $this->input->post('password');
+    		$this->load->model('user_model');
+    		$user = $this->user_model->get($login);
     			if (isset($user) && $user->comparePassword($clearPassword)) {
     				$_SESSION['user'] = $user;
     				//$this->load->view('view_main');
@@ -72,9 +89,13 @@ class Welcome extends CI_Controller {
 
 
 	function logout(){
+		$this->load->model('editor_model');
+		if(isset($_SESSION['id'])){
+			$query = $this->editor_model->logout( $_SESSION['id'],$_SESSION['user']->first);
+		}
+		
 		session_destroy();
     	redirect('index.php/welcome/index', 'refresh'); //Then we redirect to the index page again
-
 	}
 
 	function createNewUser(){
@@ -104,6 +125,27 @@ class Welcome extends CI_Controller {
     		$this->choice();
 		}
 	    	
+	}
+
+	function sendEmail(){
+	$data['id'] = $_SESSION['id'];
+		$email = $this->input->post('email');
+
+		$string = $this->input->post('string');
+		
+		$this->load->library('email');
+	
+		
+		
+		$this->email->from('patelnisargk@gmail.com', 'Session Email');
+		$this->email->to($email);
+		
+		$this->email->subject('Collaborative Editor Joining Request');
+		$this->email->message("You are requested to join Collaborative editor. Your joining String is $string");
+		
+		$result = $this->email->send();
+		
+		$this->load->view('view_main',$data);
 	}
 
 }
